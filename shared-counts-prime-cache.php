@@ -102,7 +102,7 @@ function scpc_prime_cache() {
 	if( empty( $_GET['prime_cache'] ) )
 		return;
 
-	shared_counts()->core->prime_the_pump( scpc_available_posts() );
+	shared_counts()->core->prime_the_pump( scpc_available_posts(), apply_filters( 'scpc_interval', 20 ) );
 
 
 }
