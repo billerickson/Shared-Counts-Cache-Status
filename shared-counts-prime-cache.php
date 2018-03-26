@@ -78,7 +78,8 @@ function scpc_settings_page() {
 
 		$counts = scps_shared_counts_posts();
 		$total = scpc_available_posts();
-		echo '<p>' . $counts . ' of ' . $total . ' items have Shared Counts data.</p>';
+		$percentage = (int) ( ( $counts / $total) * 100 + .5 );
+		echo '<p>' . $counts . ' of ' . $total . ' items have Shared Counts data (' . $percentage . '%).</p>';
 		if( $total > $counts )
 			echo '<p><a href="' . add_query_arg( 'prime_cache', 1, admin_url( 'options-general.php?page=shared_counts_prime_cache' ) ) . '">Update posts with missing data</a>';
 	}
