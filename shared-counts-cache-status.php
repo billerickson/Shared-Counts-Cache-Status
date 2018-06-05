@@ -70,9 +70,9 @@ function sccs_settings_page() {
 	echo '<div class="wrap">';
 	echo '<h2>Shared Counts Cache</h2>';
 
-	if( !empty( $_GET['prime_cache'] ) ) {
+	if( !empty( $_GET['cache_status'] ) ) {
 		echo '<p>Loading share data...</p>';
-		echo '<p>When page has <strong>finished loading</strong> you can <a href="' . admin_url( 'options-general.php?page=shared_counts_prime_cache' ) . '">click here</a> to see the updated cache information.</p>';
+		echo '<p>When page has <strong>finished loading</strong> you can <a href="' . admin_url( 'options-general.php?page=shared_counts_cache_status' ) . '">click here</a> to see the updated cache information.</p>';
 
 	} else {
 
@@ -81,7 +81,7 @@ function sccs_settings_page() {
 		$percentage = (int) ( ( $counts / $total) * 100 + .5 );
 		echo '<p>' . $counts . ' of ' . $total . ' items have Shared Counts data (' . $percentage . '%).</p>';
 		if( $total > $counts )
-			echo '<p><a href="' . add_query_arg( 'prime_cache', 1, admin_url( 'options-general.php?page=shared_counts_prime_cache' ) ) . '">Update posts with missing data</a>';
+			echo '<p><a href="' . add_query_arg( 'cache_status', 1, admin_url( 'options-general.php?page=shared_counts_cache_status' ) ) . '">Update posts with missing data</a>';
 	}
 
 	echo '</div>';
@@ -91,7 +91,7 @@ function sccs_settings_page() {
  * Prime Cache
  *
  */
-function sccs_prime_cache() {
+function sccs_cache_status() {
 
 	if( ! function_exists( 'shared_counts' ) )
 		return;
@@ -100,14 +100,14 @@ function sccs_prime_cache() {
 	if( 'settings_page_shared_counts_cache_status' != $screen->base )
 		return;
 
-	if( empty( $_GET['prime_cache'] ) )
+	if( empty( $_GET['cache_status'] ) )
 		return;
 
 	shared_counts()->core->prime_the_pump( sccs_available_posts(), apply_filters( 'sccs_interval', 20 ) );
 
 
 }
-add_action( 'admin_head', 'sccs_prime_cache' );
+add_action( 'admin_head', 'sccs_cache_status' );
 
 /**
  * Available Posts
